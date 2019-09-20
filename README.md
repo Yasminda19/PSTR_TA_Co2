@@ -9,19 +9,15 @@ Anggota Kelompok
  
 ### Komponen yang digunakan
 
-|Sistem Kontrol |
-|--|
-| Arduino Mega|
-| ESP 8266 |
-
 |Sensor|
 |--|
 | MG811 Carbon Dioxide Gas CO2 Sensor Module|
 |DHT22 temperature dan Humidity |
 
-|Micro-controller|
+|Sistem Kontrol |
 |--|
-||
+| Arduino Mega|
+| ESP 8266 |
 
 |Aktuator|
 |--|
