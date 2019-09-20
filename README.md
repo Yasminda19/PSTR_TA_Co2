@@ -17,7 +17,6 @@ Anggota Kelompok
 |Sistem Kontrol |
 |--|
 | Arduino Mega|
-| ESP 8266 |
 
 |Aktuator|
 |--|
@@ -25,7 +24,7 @@ Anggota Kelompok
 
 |Komunikasi|
 |--|
-||
+| ESP 8266 |
 
 ### Arsitektur Network
 
