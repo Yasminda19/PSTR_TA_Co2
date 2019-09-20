@@ -4,7 +4,7 @@
 Anggota Kelompok
 
   - Yasmin Salamah
-  - Hilmy Haidar
+  - Muhamad Hilmy Haidar
   - Suko Martin
  
 ### Komponen yang digunakan
