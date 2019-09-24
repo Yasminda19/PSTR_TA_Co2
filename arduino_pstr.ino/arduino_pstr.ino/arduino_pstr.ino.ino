@@ -1,6 +1,10 @@
 #include <TFT.h> // Hardware-specific library
 #include <SPI.h>
 #include <Esplora.h>
+#include <SoftwareSerial.h>
+
+SoftwareSerial s(5,6); // (Rx, Tx)
+
 
 //definisi warna
 #define BLACK 0x0000
@@ -37,6 +41,8 @@
 
 TFT myScreen = TFT(CS, DC, RESET);
 
+int data;
+
 // initial position of the point is the middle of the screen
 // initial position of the point is the middle of the screen
 int xPos = 80;
@@ -56,9 +62,22 @@ void setup(){
   delay(1000);  // pause for dramatic effect
   myScreen.begin();  
   myScreen.background(0,0,0);
+  s.begin(9600);
+  Serial.begin(9600);
 }
 
 void loop(){
+
+  //write data ke NODEMCU
+   s.write("s");
+  if (s.available()>0)
+  {
+    data=s.read();
+    Serial.println(data);
+  }
+
+
+  //kodingan TFT mulai disini
   EsploraTFT.stroke(255, 0, 0); // set the stroke color to red
   EsploraTFT.line(0, 10, EsploraLCD.width(), 10); // draw a line across the screen
   delay(1000);

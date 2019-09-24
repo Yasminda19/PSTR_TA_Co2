@@ -2,6 +2,9 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 
+#include <SoftwareSerial.h>
+SoftwareSerial s(5,6); // (Rx, Tx)
+
 StaticJsonBuffer<200> jsonBuffer;
 
 const char* wifiName = "Ayana";
@@ -38,9 +41,14 @@ void setup() {
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());   //You can get IP address assigned to ESP
-}
+
+
  
 void loop() {
+
+  if(s.available()>0)
+{
+}
   HTTPClient http;    //Declare object of class HTTPClient
  
   Serial.print("Request Link:");
