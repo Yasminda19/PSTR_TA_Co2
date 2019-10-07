@@ -1,0 +1,38 @@
+#include <ESP8266WiFi.h> 
+#include <DHT.h>
+#include <ThingerESP8266.h>
+ 
+#define USERNAME "yadayada" //Username thinger.io
+#define DEVICE_ID "coco_labilkomiot_pstr" 
+#define DEVICE_CREDENTIAL "awokom12"
+ 
+#define SSID "Ayana" 
+#define SSID_PASSWORD "12345678"
+ 
+#define DHTPIN D7 
+#define DHTTYPE DHT11
+ 
+ThingerESP8266 thing(USERNAME, DEVICE_ID, DEVICE_CREDENTIAL);
+ 
+DHT dht(DHTPIN, DHTTYPE);
+ 
+float hum,temp;
+ 
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Sensor CO2");
+ 
+  dht.begin();
+ 
+  thing.add_wifi(SSID, SSID_PASSWORD);
+ 
+  thing["sensorco2"] >> [](pson& out){
+    out["co2"] = hum;
+  };
+}
+ 
+void loop() {  
+  thing.handle(); 
+  
+ //readsensorco2 here
+}
