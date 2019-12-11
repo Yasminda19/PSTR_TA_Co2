@@ -1,20 +1,26 @@
-//#include <ESP8266WiFi.h>;
 #include "WiFi.h"
 #include <WiFiClient.h>;
- 
 #include <ThingSpeak.h>;
+
+//MQ4 = Methane
+//MQ9 = Carbon Monoxide
+//MQ135 = Air Quality
+//MQ7 = Smoke
  
 const char* ssid = "Ayana"; //Your Network SSID
 const char* password = "12345678"; //Your Network Password
 int val;
-int CO2pin = A0; //LDR Pin Connected at A0 Pin
+int smokepin = A0; //LDR Pin Connected at A0 Pin
+int methanepin = D4;
+int copin = D5;
+int airpin = D2;
 int redLed = 12;
 int greenLed = 11;
 int buzzer = 10;
 int sensorThres = 400;
 WiFiClient client;
-unsigned long myChannelNumber = 924423; //Your Channel Number (Without Brackets)
-const char * myWriteAPIKey = "R4FGQN7W07UOKB3R"; //Your Write API Key
+unsigned long myChannelNumber = 934949; //Your Channel Number (Without Brackets)
+const char * myWriteAPIKey = "FIU0027HEGOV9V0G"; //Your Write API Key
 void setup()
  
 {
@@ -31,15 +37,20 @@ ThingSpeak.begin(client);
  
 }
  
- 
- 
-void loop()
- 
-{
-  int analogSensor = analogRead(CO2pin);
-
-  Serial.print("Pin A0: ");
-  Serial.println(analogSensor);
+void loop(){
+  int analogMQ7 = analogRead(smokepin);
+  int analogMQ4 = analogRead(methanepin);
+  int analogMQ9 = analogRead(copin);
+  int analogMQ135 =  analogRead(airpin);
+  
+  Serial.print("Smoke: ");
+  Serial.println(analogMQ7);
+  Serial.print("Methane: ");
+  Serial.println(analogMQ4);
+  Serial.print("CO: ");
+  Serial.println(analogMQ9);
+  Serial.print("Air: ");
+  Serial.println(analogMQ135);
   // Checks if it has reached the threshold value
   if (analogSensor > sensorThres)
   {
@@ -53,13 +64,12 @@ void loop()
     digitalWrite(greenLed, HIGH);
    // noTone(buzzer);
   }
-  delay(100);
- 
-  // val = analogRead(CO2pin); //Read Analog values and Store in val variable
- 
-  Serial.print(analogSensor); //Print on Serial Monitor
+
   delay(1000);
-  ThingSpeak.writeField(myChannelNumber, 1,val, myWriteAPIKey); //Update in ThingSpeak
+  ThingSpeak.writeField(myChannelNumber, 1,analogMQ7, myWriteAPIKey);
+  ThingSpeak.writeField(myChannelNumber, 2,analogMQ4, myWriteAPIKey);
+  ThingSpeak.writeField(myChannelNumber, 3,analogMQ9, myWriteAPIKey);
+  ThingSpeak.writeField(myChannelNumber, 4,analogMQ135, myWriteAPIKey);//Update in ThingSpeak
   delay(100);
  
 }

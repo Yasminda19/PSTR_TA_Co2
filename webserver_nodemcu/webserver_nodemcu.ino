@@ -3,11 +3,21 @@ const char* ssid     = "Ayana"; //masukkin uname
 const char* password = "12345678"; //masukkin pass
 WiFiServer server(80);
 
+//MQ4 = Methane
+//MQ9 = Carbon Monoxide
+//MQ135 = Air Quality
+//MQ7 = Smoke
+ 
+const char* ssid = "Ayana"; //Your Network SSID
+const char* password = "12345678"; //Your Network Password
+int val;
+int smokepin = A0; //LDR Pin Connected at A0 Pin
+int methanepin = D4;
+int copin = D5;
+int airpin = D2;
 int redLed = 12;
 int greenLed = 11;
 int buzzer = 10;
-int smokeA0 = A5;
-// Your threshold value
 int sensorThres = 400;
 int analogSensor;
 
@@ -17,7 +27,10 @@ void setup()
   pinMode(redLed, OUTPUT);
   pinMode(greenLed, OUTPUT);
   pinMode(buzzer, OUTPUT);
-  pinMode(smokeA0, INPUT);
+  pinMode(copin, INPUT);
+  pinMode(smokepin, INPUT);
+  pinMode(methanepin, INPUT);
+  pinMode(airpin, INPUT);
   Serial.begin(115200);
   delay(10);
 
@@ -77,8 +90,22 @@ void WiFiLocalWebPageCtrl(void)
             client.println("<body>");
             // the content of the HTTP response follows the header:
             //WiFiLocalWebPageCtrl(); 
-              client.print("Gas Sensor Value: ");
-              client.print(analogSensor);
+              client.print("CO  value: ");
+              client.print(copin);
+              client.print("  oC<br>");
+              client.print("<br>");
+              client.print("Air Quality Value: ");
+              client.print(airpin);
+              client.print("  oC<br>");
+              client.print("<br>");
+              client.print("<br>");
+              client.print("Smoke Value: ");
+              client.print(smokepin);
+              client.print("  oC<br>");
+              client.print("<br>");
+              client.print("<br>");
+              client.print("Methane Value: ");
+              client.print(methanepin);
               client.print("  oC<br>");
               client.print("<br>");
               client.print("<br>");

@@ -5,12 +5,14 @@ const char* ssid = "Ayana";
 const char* password =  "12345678";
 
 /* CO2 Monitoring Section */
-int CO2pin = A0; 
+int smokepin = A0; //LDR Pin Connected at A0 Pin
+int methanepin = D4;
+int copin = D5;
+int airpin = D2;
 int redLed = 12;
 int greenLed = 11;
 int buzzer = 10;
 int sensorThres = 400;
-int val;
 
 void setup() {
   
@@ -47,14 +49,17 @@ void loop() {
    // noTone(buzzer);
   }
 
-  val = analogRead(CO2pin); //Read Analog values and Store in val variable
- 
- if(WiFi.status()== WL_CONNECTED){   //Check WiFi connection status
+  int analogMQ7 = analogRead(smokepin);
+  int analogMQ4 = analogRead(methanepin);
+  int analogMQ9 = analogRead(copin);
+  int analogMQ135 =  analogRead(airpin);
+  
+  if(WiFi.status()== WL_CONNECTED){   //Check WiFi connection status
  
    HTTPClient http;   
 
    String url = "http://hilmy.top/api/co2&value=";
-   url += val;
+   url += analogMQ7;
    Serial.println("URL : " + url);
    
    http.begin(url);  //Specify destination for HTTP request
